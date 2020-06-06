@@ -30,7 +30,7 @@
               <h5 class="card-title">${item.title}</h5>
             </div>
           </div>
-          </div>
+        </div>
       `
       dataPanel.innerHTML = htmlContent
     })
