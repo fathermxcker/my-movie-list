@@ -46,7 +46,36 @@
       if (event.target.matches('.btn-show-movie')) {
         //catch specific dataset id at line34
         console.log(event.target.dataset.id)
+
+        //get detail
+        showMoive(event.target.dataset.id)
       }
     })
+  }
+
+
+
+
+
+  function showMoive(id) {
+
+    const modalTitle = document.querySelector('#show-movie-title')
+    const modalImage = document.getElementById('show-movie-image')
+    const modalDate = document.getElementById('show-movie-date')
+    const modalDescription = document.getElementById('show-movie-description')
+
+    const url = INDEX_URL + id
+    axios.get(url)
+      .then((response) => {
+        const data = response.data.results
+
+        modalTitle.textContent = data.title
+        modalImage.innerHTML = `
+            <img class="img-fluid" src="${POSTER_URL}${data.image}" alt="Card image cap">
+            `
+        modalDate.textContent = `release at: ${data.release_date}`
+        modalDescription.textContent = data.description
+      })
+      .catch((err) => console.log(err))
   }
 })()
