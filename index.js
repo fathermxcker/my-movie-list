@@ -53,10 +53,6 @@
     })
   }
 
-
-
-
-
   function showMoive(id) {
 
     const modalTitle = document.querySelector('#show-movie-title')
@@ -78,4 +74,20 @@
       })
       .catch((err) => console.log(err))
   }
+
+  const searchForm = document.getElementById('search')
+  const searchInput = document.getElementById('search-input')
+
+
+  // listen to search form submit event
+
+  searchForm.addEventListener('submit', event => {
+    console.log('click!')
+  })
+
+  searchForm.addEventListener('submit', event => {
+    event.preventDefault()
+    console.log('click!')
+  })
+
 })()
