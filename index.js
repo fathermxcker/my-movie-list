@@ -75,19 +75,21 @@
       .catch((err) => console.log(err))
   }
 
+
   const searchForm = document.getElementById('search')
   const searchInput = document.getElementById('search-input')
 
-
   // listen to search form submit event
-
-  searchForm.addEventListener('submit', event => {
-    console.log('click!')
-  })
-
   searchForm.addEventListener('submit', event => {
     event.preventDefault()
-    console.log('click!')
+
+    //toLowerCase() filter, includes
+    let input = searchInput.value.toLowerCase()
+    let reuslts = data.filter(
+      movie => movie.title.toLowerCase().includes(input)
+    )
+    console.log(reuslts)
+    displayDataList(reuslts)
   })
 
 })()
