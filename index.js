@@ -34,6 +34,8 @@
               <button type="button" class="btn btn-primary btn-show-movie" data-toggle="modal" data-target="#show-movie-modal" data-id="${item.id}">
                 more
               </button>
+              <!-- favorite button -->
+<button class="btn btn-info btn-add-favorite" data-id="${item.id}">+</button>
             </div>
           </div>
         </div>
@@ -49,6 +51,8 @@
 
         //get detail
         showMoive(event.target.dataset.id)
+      } else if (event.target.matches('.btn-add-favorite')) {
+        addFavoriteItem(event.target.dataset.id)
       }
     })
   }
