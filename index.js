@@ -96,4 +96,22 @@
     displayDataList(reuslts)
   })
 
+  function addFavoriteItem(id) {
+    //如果找不到東西 就得到空的陣列
+    const list = JSON.parse(localStorage.getItem('favoriteMovies')) || []
+
+    // data 總表查第一個符合的 object
+    const movie = data.find(item => item.id === Number(id))
+
+    // 重複加入最愛的處理, some 有部分符合就為 true
+    if (list.some(item => (item.id === Number(id)))) {
+      alert(`${movie.title} is already in your favorite list.`)
+    } else {
+      list.push(movie)
+      alert(`Added ${movie.title} to your favorite list!`)
+    }
+    //localstorage 存入 key:value 必須為字串
+    localStorage.setItem('favoriteMovies', JSON.stringify(list))
+  }
+
 })()
