@@ -26,7 +26,7 @@
               </button>
 
               <!-- favorite button -->
-<button class="btn btn-info btn-add-favorite" data-id="${item.id}">+</button>
+<button class="btn btn-info btn-add-favorite" data-id="${item.id}">x</button>
             </div>
           </div>
         </div>
