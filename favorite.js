@@ -5,11 +5,12 @@
   const dataPanel = document.querySelector('#data-panel')
 
   //從字串轉為 Object
-  const movie = JSON.parse(localStorage.getItem(`favoriteMovies`))
-  let htmlContent = ''
-  displayDataList(movie)
+  const data = JSON.parse(localStorage.getItem(`favoriteMovies`))
+  displayDataList(data)
 
   function displayDataList(data) {
+    let htmlContent = ''
+
     data.forEach(item => {
       htmlContent += `
         <div class="col-sm-3">
@@ -26,21 +27,23 @@
               </button>
 
               <!-- favorite button -->
-<button class="btn btn-info btn-add-favorite" data-id="${item.id}">x</button>
+<button class="btn btn-danger btn-remove-favorite" data-id="${item.id}">x</button>
             </div>
           </div>
         </div>
       `
-      dataPanel.innerHTML = htmlContent
     })
+    dataPanel.innerHTML = htmlContent
+
   }
 
   //  1.點擊more 2.modal 彈窗
   dataPanel.addEventListener('click', (event) => {
-
     // console.log(event.target)
     if (event.target.matches('.btn-show-movie')) {
       showDetail(event.target.dataset.id)
+    } else if (event.target.matches('.btn-remove-favorite')) {
+      removeFavoriteItem(event.target.dataset.id)
     }
   })
 
@@ -68,6 +71,20 @@
         modalDescription.textContent = data.description
       })
       .catch((err) => console.log(err))
+  }
+
+  function removeFavoriteItem(id) {
+    // findIndex() 若為 true 回傳 index, 否則回傳 -1
+    const index = data.findIndex(item => item.id === Number(id))
+
+    // -1 直接 return -1
+    if (index === -1) return
+
+    data.splice(index, 1)
+    localStorage.setItem('favoriteMovies', JSON.stringify(data))
+
+    // repaint dataList
+    displayDataList(data)
   }
 
 })()
