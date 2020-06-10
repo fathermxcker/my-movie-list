@@ -40,15 +40,22 @@
 
     // console.log(event.target)
     if (event.target.matches('.btn-show-movie')) {
+      const modalTitle = document.querySelector('#show-movie-title')
+      const modalImage = document.querySelector('#show-movie-image')
+      const modalDate = document.querySelector('#show-movie-date')
+      const modalDescription = document.querySelector('#show-movie-description')
+
+      modalTitle.innerHTML = ''
+      modalImage.innerHTML = ''
+      modalDate.innerHTML = ''
+      modalDescription.textContent = ''
 
       url = INDEX_URL + event.target.dataset.id
       axios.get(url)
         .then((response) => {
           const data = response.data.results
-          const modalTitle = document.querySelector('#show-movie-title')
-          const modalImage = document.querySelector('#show-movie-image')
-          const modalDate = document.querySelector('#show-movie-date')
-          const modalDescription = document.querySelector('#show-movie-description')
+
+          //render modal
           modalTitle.innerHTML = data.title
           modalImage.innerHTML = `
           <img class="img-fluid" src="${POSTER_URL}${data.image}" alt="Card image cap">
@@ -57,7 +64,7 @@
           modalDescription.textContent = data.description
 
         })
-        .catch()
+        .catch((err) => console.log(err))
 
 
 
