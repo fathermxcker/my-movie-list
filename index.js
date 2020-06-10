@@ -64,6 +64,11 @@
     const modalDate = document.getElementById('show-movie-date')
     const modalDescription = document.getElementById('show-movie-description')
 
+    modalTitle.innerHTML = ''
+    modalImage.innerHTML = ''
+    modalDate.innerHTML = ''
+    modalDescription.textContent = ''
+
     const url = INDEX_URL + id
     axios.get(url)
       .then((response) => {
