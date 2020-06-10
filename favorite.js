@@ -40,29 +40,34 @@
 
     // console.log(event.target)
     if (event.target.matches('.btn-show-movie')) {
-      const modalTitle = document.querySelector('#show-movie-title')
-      const modalImage = document.querySelector('#show-movie-image')
-      const modalDate = document.querySelector('#show-movie-date')
-      const modalDescription = document.querySelector('#show-movie-description')
-
-      modalTitle.innerHTML = ''
-      modalImage.innerHTML = ''
-      modalDate.innerHTML = ''
-      modalDescription.textContent = ''
-
-      url = INDEX_URL + event.target.dataset.id
-      axios.get(url)
-        .then((response) => {
-          const data = response.data.results
-          //render modal
-          modalTitle.innerHTML = data.title
-          modalImage.innerHTML = `
-          <img class="img-fluid" src="${POSTER_URL}${data.image}" alt="Card image cap">
-          `
-          modalDate.innerHTML = `release at: ${data.release_date}`
-          modalDescription.textContent = data.description
-        })
-        .catch((err) => console.log(err))
+      showDetail(event.target.dataset.id)
     }
   })
+
+  function showDetail(id) {
+    const modalTitle = document.querySelector('#show-movie-title')
+    const modalImage = document.querySelector('#show-movie-image')
+    const modalDate = document.querySelector('#show-movie-date')
+    const modalDescription = document.querySelector('#show-movie-description')
+
+    modalTitle.innerHTML = ''
+    modalImage.innerHTML = ''
+    modalDate.innerHTML = ''
+    modalDescription.textContent = ''
+
+    url = INDEX_URL + id
+    axios.get(url)
+      .then((response) => {
+        const data = response.data.results
+        //render modal
+        modalTitle.innerHTML = data.title
+        modalImage.innerHTML = `
+          <img class="img-fluid" src="${POSTER_URL}${data.image}" alt="Card image cap">
+          `
+        modalDate.innerHTML = `release at: ${data.release_date}`
+        modalDescription.textContent = data.description
+      })
+      .catch((err) => console.log(err))
+  }
+
 })()
