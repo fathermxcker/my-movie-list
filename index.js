@@ -50,15 +50,14 @@
         console.log(event.target.dataset.id)
 
         //get detail
-        showMoive(event.target.dataset.id)
+        showDetail(event.target.dataset.id)
       } else if (event.target.matches('.btn-add-favorite')) {
         addFavoriteItem(event.target.dataset.id)
       }
     })
   }
 
-  function showMoive(id) {
-
+  function showDetail(id) {
     const modalTitle = document.querySelector('#show-movie-title')
     const modalImage = document.getElementById('show-movie-image')
     const modalDate = document.getElementById('show-movie-date')
