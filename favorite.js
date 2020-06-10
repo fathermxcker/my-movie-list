@@ -3,15 +3,11 @@
   const INDEX_URL = BASE_URL + '/api/v1/movies/'
   const POSTER_URL = BASE_URL + '/posters/'
   const dataPanel = document.querySelector('#data-panel')
-
   const movie = JSON.parse(localStorage.getItem(`favoriteMovies`))
   let htmlContent = ''
-
   displayDataList(movie)
 
-
   function displayDataList(data) {
-
     data.forEach(item => {
       htmlContent += `
         <div class="col-sm-3">
@@ -54,7 +50,6 @@
       axios.get(url)
         .then((response) => {
           const data = response.data.results
-
           //render modal
           modalTitle.innerHTML = data.title
           modalImage.innerHTML = `
@@ -62,20 +57,8 @@
           `
           modalDate.innerHTML = `release at: ${data.release_date}`
           modalDescription.textContent = data.description
-
         })
         .catch((err) => console.log(err))
-
-
-
-
     }
-
   })
-
-
-
-  //render detail page
-
-
 })()
