@@ -3,6 +3,8 @@
   const INDEX_URL = BASE_URL + '/api/v1/movies/'
   const POSTER_URL = BASE_URL + '/posters/'
   const dataPanel = document.querySelector('#data-panel')
+
+  //從字串轉為 Object
   const movie = JSON.parse(localStorage.getItem(`favoriteMovies`))
   let htmlContent = ''
   displayDataList(movie)
@@ -16,11 +18,13 @@
             <div class="card-body">
               <h5 class="card-title">${item.title}</h5>
             </div>
+
             <!-- Button trigger modal  dataset solution-->
             <div class="card-footer">
               <button type="button" class="btn btn-primary btn-show-movie" data-toggle="modal" data-target="#show-movie-modal" data-id="${item.id}">
                 more
               </button>
+
               <!-- favorite button -->
 <button class="btn btn-info btn-add-favorite" data-id="${item.id}">+</button>
             </div>
