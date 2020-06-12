@@ -12,9 +12,49 @@
     .then((response) => {
       data.push(...response.data.results) //展開運算子...把陣列元素展開
       // console.log(data)
-      displayDataList(data)
+      getTotalPages(data)
+      // displayDataList(data)
+      getPageData(1, data)
     })
     .catch((err) => console.log(err))
+
+
+  //pagination
+  const pagination = document.querySelector('.pagination')
+  const ITEM_PER_PAGE = 12
+
+  function getTotalPages(data) {
+    let totalPages = Math.ceil(data.length / ITEM_PER_PAGE) || 1
+    let pageItemContent = ''
+
+    for (let i = 0; i < totalPages; i++) {
+      pageItemContent += `
+      <li class="page-item">
+        <a class="page-link" href="javascript:;" data-page="${i + 1}">${i + 1}</a>
+      </li>
+    `
+    }
+    pagination.innerHTML = pageItemContent
+  }
+
+
+  pagination.addEventListener('click', event => {
+    if (event.target.matches('.page-link')) {
+      //抓頁數
+      getPageData(event.target.dataset.page, data)
+    }
+  })
+
+  function getPageData(pageNum, data) {
+    //選中的前一頁之前的所有電影 再往後12筆
+    let startData = (pageNum - 1) * ITEM_PER_PAGE
+    let pageData = data.slice(startData, startData + ITEM_PER_PAGE)
+    displayDataList(pageData)
+  }
+
+
+
+
 
 
   function displayDataList(data) {
