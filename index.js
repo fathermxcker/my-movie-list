@@ -45,16 +45,17 @@
     }
   })
 
+
+  let paginationData = []
   function getPageData(pageNum, data) {
+    //若沒有新的data傳入， 則使用原來的data
+    paginationData = data || paginationData
+
     //選中的前一頁之前的所有電影 再往後12筆
     let startData = (pageNum - 1) * ITEM_PER_PAGE
-    let pageData = data.slice(startData, startData + ITEM_PER_PAGE)
+    let pageData = paginationData.slice(startData, startData + ITEM_PER_PAGE)
     displayDataList(pageData)
   }
-
-
-
-
 
 
   function displayDataList(data) {
@@ -112,7 +113,6 @@
     axios.get(url)
       .then((response) => {
         const data = response.data.results
-
         modalTitle.textContent = data.title
         modalImage.innerHTML = `
             <img class="img-fluid" src="${POSTER_URL}${data.image}" alt="Card image cap">
@@ -131,14 +131,23 @@
   searchForm.addEventListener('submit', event => {
     event.preventDefault()
 
+    //正則
+    // let results = []
+    // const regex = new RegExp(searchInput.value, 'i')
+    // results = data.filter(movie => movie.title.match(regex))
+    // console.log(results)
+
     //toLowerCase() filter, includes
     let input = searchInput.value.toLowerCase()
-    let reuslts = data.filter(
+    let results = data.filter(
       movie => movie.title.toLowerCase().includes(input)
     )
-    console.log(reuslts)
-    displayDataList(reuslts)
+    // displayDataList(reuslts)
+    getTotalPages(results)
+    getPageData(1, results)
   })
+
+
 
   function addFavoriteItem(id) {
     //如果找不到東西 就得到空的陣列
