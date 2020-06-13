@@ -167,4 +167,42 @@
     localStorage.setItem('favoriteMovies', JSON.stringify(list))
   }
 
+
+
+  const list = document.querySelector('#list')
+  const card = document.querySelector('#card')
+
+  list.addEventListener('click', (event) => {
+    console.log(event.target)
+    let htmlContent = ''
+
+    data.forEach(function (item, index) {
+
+      // console.log(POSTER_URL + item.image)
+      htmlContent += `
+        <div class="container card mb-3">
+          <div class=" mb-1 row">
+            <div class="card-body">
+              <h5 class="card-title">${item.title}</h5>
+            </div>
+
+            <div class="mt-3">
+              <button type="button" class="btn btn-primary btn-show-movie" data-toggle="modal" data-target="#show-movie-modal" data-id="${item.id}">
+                more
+              </button>
+              <!-- favorite button -->
+              <button class="btn btn-info btn-add-favorite" data-id="${item.id}">+</button>
+            </div>
+          </div>
+       </div>
+      `
+    })
+
+
+    dataPanel.innerHTML = htmlContent
+
+
+
+  })
+
 })()
