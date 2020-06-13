@@ -83,20 +83,20 @@
       `
       dataPanel.innerHTML = htmlContent
     })
-
-
-    dataPanel.addEventListener('click', (event) => {
-      if (event.target.matches('.btn-show-movie')) {
-        //catch specific dataset id at line34
-        console.log(event.target.dataset.id)
-
-        //get detail
-        showDetail(event.target.dataset.id)
-      } else if (event.target.matches('.btn-add-favorite')) {
-        addFavoriteItem(event.target.dataset.id)
-      }
-    })
   }
+
+
+  dataPanel.addEventListener('click', (event) => {
+    if (event.target.matches('.btn-show-movie')) {
+      //catch specific dataset id at line34
+      console.log(event.target.dataset.id)
+
+      //get detail
+      showDetail(event.target.dataset.id)
+    } else if (event.target.matches('.btn-add-favorite')) {
+      addFavoriteItem(event.target.dataset.id)
+    }
+  })
 
   function showDetail(id) {
     const modalTitle = document.querySelector('#show-movie-title')
