@@ -11,7 +11,6 @@
   axios.get(INDEX_URL)
     .then((response) => {
       data.push(...response.data.results) //展開運算子...把陣列元素展開
-      // console.log(data)
       getTotalPages(data)
       // displayDataList(data)
       getPageData(1, data)
@@ -37,33 +36,44 @@
     pagination.innerHTML = pageItemContent
   }
 
-
   pagination.addEventListener('click', event => {
     if (event.target.matches('.page-link')) {
       //抓頁數
-      getPageData(event.target.dataset.page, data)
+      if (mode === 'list') {
+        getPageData(event.target.dataset.page, data, 'list')
+      } else {
+        getPageData(event.target.dataset.page, data)
+      }
+      console.log(mode)
     }
   })
 
-
   let paginationData = []
-  function getPageData(pageNum, data) {
+  function getPageData(pageNum, data, mode) {
+    ///若沒有新的mode傳入， 則使用card模式
+    mode = mode || 'card'
+
     //若沒有新的data傳入， 則使用原來的data
     paginationData = data || paginationData
 
     //選中的前一頁之前的所有電影 再往後12筆
     let startData = (pageNum - 1) * ITEM_PER_PAGE
     let pageData = paginationData.slice(startData, startData + ITEM_PER_PAGE)
-    displayDataList(pageData)
+    displayDataList(pageData, mode)
   }
 
 
-  function displayDataList(data) {
+  //add mode parameter
+  function displayDataList(data, mode) {
+    console.log(`傳入的mode為 ${mode}`)
     let htmlContent = ''
-    data.forEach(function (item, index) {
+    console.log(`輸出的mode為 ${mode}`)
+    console.log(`htmlContent: ${htmlContent}`)
 
-      // console.log(POSTER_URL + item.image)
-      htmlContent += `
+    if (mode === 'card') {
+      data.forEach(function (item, index) {
+        // console.log(POSTER_URL + item.image)
+        htmlContent += `
         <div class="col-sm-3">
           <div class="card mb-2">
             <img class="card-img-top" src="${POSTER_URL}${item.image}" alt="Card image cap">
@@ -81,8 +91,29 @@
           </div>
         </div>
       `
-      dataPanel.innerHTML = htmlContent
-    })
+      })
+    } else {
+      data.forEach(function (item, index) {
+        htmlContent += `
+        <div class="container card mb-3">
+          <div class=" mb-1 row">
+            <div class="card-body">
+              <h5 class="card-title">${item.title}</h5>
+            </div>
+
+            <div class="mt-3">
+              <button type="button" class="btn btn-primary btn-show-movie" data-toggle="modal" data-target="#show-movie-modal" data-id="${item.id}">
+                more
+              </button>
+              <!-- favorite button -->
+              <button class="btn btn-info btn-add-favorite" data-id="${item.id}">+</button>
+            </div>
+          </div>
+       </div>
+      `
+      })
+    }
+    dataPanel.innerHTML = htmlContent
   }
 
 
@@ -169,40 +200,22 @@
 
 
 
+  // displayMode toggle
   const list = document.querySelector('#list')
   const card = document.querySelector('#card')
+  let mode = ''
+
+  card.addEventListener('click', (event) => {
+    mode = 'card'
+    getTotalPages(data)
+    getPageData(1, data, mode)
+  })
+
 
   list.addEventListener('click', (event) => {
-    console.log(event.target)
-    let htmlContent = ''
-
-    data.forEach(function (item, index) {
-
-      // console.log(POSTER_URL + item.image)
-      htmlContent += `
-        <div class="container card mb-3">
-          <div class=" mb-1 row">
-            <div class="card-body">
-              <h5 class="card-title">${item.title}</h5>
-            </div>
-
-            <div class="mt-3">
-              <button type="button" class="btn btn-primary btn-show-movie" data-toggle="modal" data-target="#show-movie-modal" data-id="${item.id}">
-                more
-              </button>
-              <!-- favorite button -->
-              <button class="btn btn-info btn-add-favorite" data-id="${item.id}">+</button>
-            </div>
-          </div>
-       </div>
-      `
-    })
-
-
-    dataPanel.innerHTML = htmlContent
-
-
-
+    mode = 'list'
+    getTotalPages(data)
+    getPageData(1, data, mode)
   })
 
 })()
